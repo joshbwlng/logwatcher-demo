@@ -1,0 +1,67 @@
+{
+  "name": "logwatcher-demo",
+  "description": "logwatcher-demo",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshbwlng/logwatcher-demo.git"
+  },
+  "engines": {
+    "node": ">=16.14.0"
+  },
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build/"
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "deplint": {
+    "files": [
+      "lib/**/*.{ts}"
+    ],
+    "modules": [
+      "lib"
+    ]
+  },
+  "lint-staged": {
+    "*.ts": [
+      "balena-lint --fix"
+    ]
+  },
+  "scripts": {
+    "clean": "rimraf build",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "lint": "balena-lint lib && deplint",
+    "lint:fix": "balena-lint --fix lib",
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "jest",
+    "prepack": "npm run build",
+    "start": "node build/index.js",
+    "dev": "NODE_ENV=development nodemon ./lib/index.ts"
+  },
+  "author": "Josh Bowling <josh@monarci.com>",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "@sentry/node": "^6.19.7",
+    "@seydx/journalctl": "^1.0.0",
+    "express": "^4.18.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@balena/lint": "^6.2.0",
+    "@types/express": "^4.17.13",
+    "@types/lodash": "^4.14.182",
+    "deplint": "^1.1.3",
+    "lint-staged": "^12.4.1",
+    "nodemon": "^2.0.16",
+    "rimraf": "^3.0.2",
+    "simple-git-hooks": "^2.7.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  }
+}

@@ -1,0 +1,14 @@
+version: '2.1'
+
+services:
+  demo:
+    build:
+      context: .
+      dockerfile: Dockerfile.template
+    ports:
+      - "80:3000"
+    networks:
+      - internal
+
+networks:
+  internal: {}
